@@ -13,7 +13,8 @@
         plus (second (re-find #"([^+ ]+)\+\+$" (:text message)))
         minus (second (re-find #"([^+ ]+)--$" (:text message)))
         pluseq (re-find #"([^+ ]+)\+=([0-9]+)$" (:text message))
-        minuseq (re-find #"([^+ ]+)\-=([0-9]+)$" (:text message))]
+        minuseq (re-find #"([^+ ]+)\-=([0-9]+)$" (:text message))
+        total (re-find #"^\+\+$" (:text message))]
    (cond
       plus (let [user (lower-case plus)
                  cnt (+ (or (get @plusplus user) 0) 1)]
@@ -35,6 +36,7 @@
                            (Integer/parseInt value))]
                  (swap! plusplus assoc user cnt)
                  (str user "-=" value " (" cnt ")"))
+      total (str @plusplus)
       :else "")))
 
 (defroutes

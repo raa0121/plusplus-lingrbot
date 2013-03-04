@@ -1,0 +1,10 @@
+:q
+(str 'a)
+(def plusplus (atom (hash-map)))
+(with-open [r (reader "plusplus.json")]
+(reduce (fn [m [k v]]
+(swap! plusplus assoc (lower-case k) v)), {}, (read-json r false)))
+(:use
+[clojure.data.json :only (read-json json-str)]
+)
+(:use 'clojure.data.json)
